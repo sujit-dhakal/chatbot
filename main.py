@@ -1,12 +1,22 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from pydantic import BaseModel
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores import Chroma
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_chroma import Chroma
 import os
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.schema import Document
+from langchain_community.document_loaders import TextLoader
+import json
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
-os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
+
+class Settings(BaseSettings):
+    OPENAI_API_KEY: str
+    model_config = SettingsConfigDict(env_file=".env")
+
+
+settings = Settings()
+
+os.environ["OPENAI_API_KEY"] = settings.OPENAI_API_KEY
 
 # Create instance of FastAPI
 app = FastAPI()
@@ -16,10 +26,12 @@ class QueryRequest(BaseModel):
     query: str
     num_results: int = 3
 
+
 # Initialize ChromaDB with persistence
 CHROMA_DIR = "./chroma_db"
 embedding_model = OpenAIEmbeddings()
-vectorstore = Chroma(persist_directory=CHROMA_DIR, embedding_function=embedding_model)
+vector_store = Chroma(collection_name="chatbot",embedding_function=embedding_model,persist_directory=CHROMA_DIR)
+llm = ChatOpenAI(model="gpt-4o-mini")
 
 @app.post("/upload/")
 async def upload_document(file: UploadFile = File(...)):
@@ -28,57 +40,55 @@ async def upload_document(file: UploadFile = File(...)):
     """
     try:
         # Read the file content
-        content = await file.read()
-        content_text = content.decode("utf-8")
-        document = Document(page_content=content_text)
+        loader = TextLoader(file.filename)
+        documents = loader.load()
 
-        # Split the document into chunks
-        text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=200)
-        all_splits = text_splitter.split_documents([document])
-        split_texts = [split.page_content for split in all_splits]
+        #split the documents
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=500,chunk_overlap=200,length_function=len)
+        splits = text_splitter.split_documents(documents)
 
-        # Generate unique IDs for each chunk
-        chunk_ids = [f"{file.filename}_{i}" for i in range(len(split_texts))]
-
-        # Add chunks to ChromaDB
-        vectorstore.add_texts(
-            texts=split_texts,
-            metadatas=[{"filename": file.filename}] * len(split_texts),
-            ids=chunk_ids
-        )
+        #store in chromaDB
+        vector_store.add_documents(splits)
 
         return {"message": "Document uploaded successfully", "filename": file.filename}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error adding document: {str(e)}")
 
-@app.get("/documents/")
-async def list_documents():
+@app.post("/chat/")
+async def query_documents(request:QueryRequest):
     """
-    List all the document IDs stored in ChromaDB.
+    Give the results to llm and get answer.
     """
     try:
-        collections = vectorstore.get()
-        document_ids = collections.get("ids", [])
-        return {"documents": document_ids}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error listing documents: {str(e)}")
+        results = vector_store.similarity_search(request.query,k=request.num_results)
+        context = "\n".join([result.page_content for result in results])
 
-@app.post("/query/")
-async def query_documents(request: QueryRequest):
-    """
-    Query documents by providing a search string.
-    """
-    try:
-        results = vectorstore.similarity_search(request.query, k=request.num_results)
+        # Define prompt for question-answering
+        instructions = (
+            "You are an assistant that answers questions based strictly on the provided context. "
+            "Provide the answer in a clean, conversational, and user-friendly format. Avoid using any special characters, bullet points, or unnecessary formatting. "
+            "If the answer is not in the context, say 'I don't know.'"
+        )
+        full_prompt = f"""{instructions}
+        Context:{context}
+        Question: {request.query}"""
+
+        # Step 4: Generate response using LLM
+        model_response = llm.invoke(full_prompt)
+
+        # store the converstion in a json file
+        data = {
+            "question": request.query,
+            "answer": model_response.content
+        }
+
+        with open("qa.jsonl","a") as f:
+            json.dump(data,f)
+            f.write("\n")
+
         return {
             "query": request.query,
-            "results": [
-                {
-                    "id": result.metadata.get("filename"),
-                    "content": result.page_content
-                }
-                for result in results
-            ],
+            "model_response": model_response.content
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error querying documents: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error processing chat request: {str(e)}")
