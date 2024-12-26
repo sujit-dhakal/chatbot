@@ -5,3 +5,5 @@ langchain_chroma
 langchain_community
 langchain_core
 langchain-openai
+sqlmodel
+psycopg2-binary

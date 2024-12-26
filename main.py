@@ -7,6 +7,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
 import json
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from db_utils import add_document,list_documents,delete_document, SessionDep, DocumentStore
 
 
 class Settings(BaseSettings):
@@ -33,12 +34,17 @@ embedding_model = OpenAIEmbeddings()
 vector_store = Chroma(collection_name="chatbot",embedding_function=embedding_model,persist_directory=CHROMA_DIR)
 llm = ChatOpenAI(model="gpt-4o-mini")
 
+
 @app.post("/upload/")
-async def upload_document(file: UploadFile = File(...)):
+async def upload_document(session: SessionDep,file: UploadFile=File(...)):
     """
     Upload a document and store its embeddings in ChromaDB.
     """
     try:
+        # store in the database
+        document = DocumentStore(filename=file.filename)
+        add_document(document,session)
+
         # Read the file content
         loader = TextLoader(file.filename)
         documents = loader.load()
@@ -46,6 +52,9 @@ async def upload_document(file: UploadFile = File(...)):
         #split the documents
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=500,chunk_overlap=200,length_function=len)
         splits = text_splitter.split_documents(documents)
+
+        for split in splits:
+            split.metadata['file_id'] = document.id
 
         #store in chromaDB
         vector_store.add_documents(splits)
@@ -66,8 +75,8 @@ async def query_documents(request:QueryRequest):
         # Define prompt for question-answering
         instructions = (
             "You are an assistant that answers questions based strictly on the provided context. "
-            "Provide the answer in a clean, conversational, and user-friendly format. Avoid using any special characters, bullet points, or unnecessary formatting. "
-            "If the answer is not in the context, say 'I don't know.'"
+            "Provide the answer in a clean, conversational, and user-friendly format. Avoid using any special characters, bullet points, or unnecessary formatting."
+            "If there is no context about the question then start the answer by saying there is no context about it in the document and generate the anwer on your own."
         )
         full_prompt = f"""{instructions}
         Context:{context}
@@ -88,7 +97,22 @@ async def query_documents(request:QueryRequest):
 
         return {
             "query": request.query,
-            "model_response": model_response.content
+            "model_response": model_response.content,
+            "context":context
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing chat request: {str(e)}")
+
+
+# get the documents
+@app.get("/documents/")
+def get_all_documents(session:SessionDep):
+    return list_documents(session)
+
+
+# delete a document by document id
+@app.delete("/delete-docs/{doc_id}")
+def delete_document_from_store(session:SessionDep,doc_id:int):
+    vector_store._collection.delete(where={"file_id":doc_id})
+    delete_document(doc_id,session)
+    return {"message":"Document deleted successfully"}
