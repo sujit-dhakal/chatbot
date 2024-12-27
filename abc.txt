@@ -1,45 +1,53 @@
-Economics is the social science that studies how individuals, businesses, governments, and nations make choices about allocating limited resources to satisfy their unlimited wants and needs. It explores how people make decisions about production, consumption, and distribution of goods and services, and how these decisions interact within the larger economy.
+Features of Java
+The primary objective of Java programming language creation was to make it portable, simple and secure programming language. Apart from this, there are also some excellent features which play an important role in the popularity of this language. The features of Java are also known as Java buzzwords.
 
-Applications of Economics:
-Business Decision Making:
+A list of the most important features of the Java language is given below.
 
-1.Pricing Strategies: Businesses use economic principles to determine pricing based on market demand, competition, and production costs.
-Cost-Benefit Analysis: Companies evaluate the potential benefits and costs of different decisions, such as launching new products or entering new markets.
-Market Research: Economics helps businesses analyze consumer behavior and preferences, guiding product development and marketing strategies.
-Public Policy and Government:
+1.Simple
+2.Object-Oriented
+3.Portable
+4.Platform independent
+5.Secured
+6.Robust
+7.Architecture neutral
+8.Interpreted
+9.High Performance
+10.Multithreaded
+11.Distributed
+12.Dynamic
 
-2.Fiscal Policy: Governments use economics to decide how much to spend and tax, influencing overall economic activity.
-Monetary Policy: Central banks use economic tools like interest rates and money supply adjustments to stabilize the economy.
-Welfare Economics: The study of how economic policies affect social welfare, guiding decisions on redistribution, poverty alleviation, and social security.
-International Trade and Global Economy:
+1.Simple
+Java is very easy to learn, and its syntax is simple, clean and easy to understand. According to Sun Microsystem, Java language is a simple programming language because:
 
-3.Trade Policies: Economics helps governments determine trade agreements, tariffs, and quotas to manage imports and exports.
-Global Financial Systems: Economics is essential in understanding global financial markets, exchange rates, and international monetary policies.
-Environmental Economics:
+Java syntax is based on C++ (so easier for programmers to learn it after C++).
+Java has removed many complicated and rarely-used features, for example, explicit pointers, operator overloading, etc.
+There is no need to remove unreferenced objects because there is an Automatic Garbage Collection in Java.
 
-4.Resource Allocation: Economics is used to manage and allocate natural resources like water, land, and energy efficiently.
-Environmental Policy: Economists analyze the costs and benefits of environmental policies, such as carbon taxes or emissions trading, to promote sustainable practices.
-Labor and Employment:
+2. Object-oriented
+Java is an object-oriented programming language. Everything in Java is an object. Object-oriented means we organize our software as a combination of different types of objects that incorporate both data and behavior.
 
-5.Labor Market Analysis: Economics studies the supply and demand for labor, wage determination, and employment trends.
-Human Capital Investment: Governments and businesses invest in education and training to increase the productivity and efficiency of workers.
-Health Economics:
+Object-oriented programming (OOPs) is a methodology that simplifies software development and maintenance by providing some rules.
 
-6.Healthcare System Efficiency: Economics evaluates how resources in healthcare are allocated, helping to improve access to and the affordability of medical care.
-Insurance and Risk Management: Economics plays a role in designing health insurance policies and understanding the economics of healthcare coverage.
-Development Economics:
+Basic concepts of OOPs are:
 
-7.Poverty Reduction: Economics helps design policies to reduce poverty and foster economic development in less developed countries.
-Economic Growth: Understanding the factors that contribute to economic growth, such as infrastructure development, education, and technology, is a key application.
-Behavioral Economics:
+Object
+Class
+Inheritance
+Polymorphism
+Abstraction
+Encapsulation
 
-8.Consumer Decision Making: Behavioral economics helps businesses understand how emotions, biases, and social influences affect purchasing behavior.
-Public Health Campaigns: Economists use behavioral insights to design programs that encourage healthy behaviors, like quitting smoking or exercising.
-Financial Markets and Investment:
 
-9.Investment Strategies: Economics informs investors on risk, return, and market efficiency when making investment decisions.
-Stock Market Analysis: Understanding economic indicators and trends helps investors predict stock market movements and manage portfolios.
-Urban and Regional Economics:
+3. Platform Independent
+Java is platform independent
+Java is platform independent because it is different from other languages like C, C++, etc. which are compiled into platform specific machines while Java is a write once, run anywhere language. A platform is the hardware or software environment in which a program runs.
 
-10.City Planning: Economics helps design policies for urban development, housing, and transportation systems.
-Regional Economic Development: Governments use economics to develop policies that improve the economic health of specific regions, including rural and underdeveloped areas.
+There are two types of platforms software-based and hardware-based. Java provides a software-based platform.
+
+The Java platform differs from most other platforms in the sense that it is a software-based platform that runs on top of other hardware-based platforms. It has two components:
+
+Runtime Environment
+API(Application Programming Interface)
+Java code can be executed on multiple platforms, for example, Windows, Linux, Sun Solaris, Mac/OS, etc. Java code is compiled by the compiler and converted into bytecode. This bytecode is a platform-independent code because it can be run on multiple platforms, i.e., Write Once and Run Anywhere (WORA).
+
+

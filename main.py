@@ -77,6 +77,7 @@ async def query_documents(request:QueryRequest):
             "You are an assistant that answers questions based strictly on the provided context. "
             "Provide the answer in a clean, conversational, and user-friendly format. Avoid using any special characters, bullet points, or unnecessary formatting."
             "If there is no context about the question then start the answer by saying there is no context about it in the document and generate the anwer on your own."
+            "You should convert the answer in simple words. Provide example if you can give an example about the context."
         )
         full_prompt = f"""{instructions}
         Context:{context}
@@ -91,7 +92,7 @@ async def query_documents(request:QueryRequest):
             "answer": model_response.content
         }
 
-        with open("qa.jsonl","a") as f:
+        with open("conversations.jsonl","a") as f:
             json.dump(data,f)
             f.write("\n")
 
