@@ -1,0 +1,34 @@
+Linear Algebra
+
+Linear Algebra is the branch of mathematics that focuses on the study of vectors, vector spaces, and linear transformations. It deals with linear equations, linear functions, and their representations through matrices and determinants. It has a wide range of applications in Physics and Mathematics. It is the basic concept for machine learning and data science. We have explained the Linear Algebra and types of Linear Algebra.
+
+Linear Algebra Equations
+
+The general linear equation is represented as u1x1 + u2x2+…..unxn= v
+
+The derivatives represent the rate of function with respect to any variable. The derivative of a function f(x) is denoted as f'(x) or (d/dx) [f(x)]. The process of finding derivatives is called differentiation.
+
+The most fundamental derivative formula is the definition of a derivative, which is defined as:
+
+f'(x) = limh→0 [(f(x + h) - f(x))/h]
+
+What is Python
+
+Python is a general-purpose, dynamically typed, high-level, compiled and interpreted, garbage-collected, and purely object-oriented programming language that supports procedural, object-oriented, and functional programming.
+
+Features of Python:
+Easy to use and Read - Python's syntax is clear and easy to read, making it an ideal language for both beginners and experienced programmers. This simplicity can lead to faster development and reduce the chances of errors.
+Dynamically Typed - The data types of variables are determined during run-time. We do not need to specify the data type of a variable during writing codes.
+High-level - High-level language means human readable code.
+Compiled and Interpreted - Python code first gets compiled into bytecode, and then interpreted line by line. When we download the Python in our system form org we download the default implement of Python known as CPython. CPython is considered to be Complied and Interpreted both.
+Garbage Collected - Memory allocation and de-allocation are automatically managed. Programmers do not specifically need to manage the memory.
+Purely Object-Oriented - It refers to everything as an object, including numbers and strings.
+Cross-platform Compatibility - Python can be easily installed on Windows, macOS, and various Linux distributions, allowing developers to create software that runs across different operating systems.
+Rich Standard Library - Python comes with several standard libraries that provide ready-to-use modules and functions for various tasks, ranging from web development and data manipulation to machine learning and networking.
+Open Source - Python is an open-source, cost-free programming language. It is utilized in several sectors and disciplines as a result.
+Python has many web-based assets, open-source projects, and a vibrant community. Learning the language, working together on projects, and contributing to the Python ecosystem are all made very easy for developers.
+
+Because of its straightforward language framework, Python is easier to understand and write code in. This makes it a fantastic programming language for novices. Additionally, it assists seasoned programmers in writing clear and error-free code.
+
+Python has many third-party libraries that can be used to make its functionality easier. These libraries cover many domains, for example, web development, scientific computing, data analysis, and more.
+

@@ -74,10 +74,11 @@ async def query_documents(request:QueryRequest):
 
         # Define prompt for question-answering
         instructions = (
-            "You are an assistant that answers questions based strictly on the provided context. "
-            "Provide the answer in a clean, conversational, and user-friendly format. Avoid using any special characters, bullet points, or unnecessary formatting."
-            "If there is no context about the question then start the answer by saying there is no context about it in the document and generate the anwer on your own."
-            "You should convert the answer in simple words. Provide example if you can give an example about the context."
+            "You are an assistant that answers questions strictly based on the provided context. "
+            "Provide the answer in clean, conversational language. Avoid using special characters, bullet points, or unnecessary formatting. "
+            "If the question lacks context, start by stating: 'There is no context about this in the document,' and then answer the question as best as possible. "
+            "Use simple words and provide examples when possible. Ensure the output is a single, continuous paragraph without line breaks or extra spaces."
+            "Avoid writing escape sequences."
         )
         full_prompt = f"""{instructions}
         Context:{context}
@@ -92,8 +93,8 @@ async def query_documents(request:QueryRequest):
             "answer": model_response.content
         }
 
-        with open("conversations.jsonl","a") as f:
-            json.dump(data,f)
+        with open("conversations.jsonl","a", encoding="utf-8") as f:
+            json.dump(data,f,ensure_ascii=False)
             f.write("\n")
 
         return {
