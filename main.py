@@ -32,7 +32,7 @@ class QueryRequest(BaseModel):
 CHROMA_DIR = "./chroma_db"
 embedding_model = OpenAIEmbeddings()
 vector_store = Chroma(collection_name="chatbot",embedding_function=embedding_model,persist_directory=CHROMA_DIR)
-llm = ChatOpenAI(model="o1-mini")
+llm = ChatOpenAI(model="o1-preview")
 
 
 @app.post("/upload/")
