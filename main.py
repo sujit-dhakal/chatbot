@@ -32,7 +32,7 @@ class QueryRequest(BaseModel):
 CHROMA_DIR = "./chroma_db"
 embedding_model = OpenAIEmbeddings()
 vector_store = Chroma(collection_name="chatbot",embedding_function=embedding_model,persist_directory=CHROMA_DIR)
-llm = ChatOpenAI(model="o1-preview")
+llm = ChatOpenAI(model="o1-mini")
 
 
 @app.post("/upload/")
@@ -76,9 +76,11 @@ async def query_documents(request:QueryRequest):
         instructions = (
             "You are an assistant that answers questions strictly based on the provided context. "
             "Provide the answer in clean, conversational language. Avoid using special characters, bullet points, or unnecessary formatting. "
-            "If the question lacks context, start by stating: 'There is no context about this in the document,' and then answer the question as best as possible. "
-            "Use simple words and provide examples when possible. Ensure the output is a single, continuous paragraph without line breaks or extra spaces."
-            "Avoid writing escape sequences."
+            "If there is no information about the context in the document then start the answer by saying 'There is no context about this in the document,' and then answer the question as best as possible. "
+            "Use simple words and provide examples when possible. Ensure the output is a single, continuous paragraph without line breaks or extra spaces. "
+            "Avoid writing escape sequences. "
+            "If it is a statistics question, provide the formula in the answer and show the step-by-step solution with the formula, including calculations like square roots or summation. "
+            "Use mathematical symbols like '√' (square root), 'Σ' (summation), and '²' (square) directly in the solution."
         )
         full_prompt = f"""{instructions}
         Context:{context}
@@ -93,7 +95,7 @@ async def query_documents(request:QueryRequest):
             "answer": model_response.content
         }
 
-        with open("conversations.jsonl","a", encoding="utf-8") as f:
+        with open("stat.jsonl","a", encoding="utf-8") as f:
             json.dump(data,f,ensure_ascii=False)
             f.write("\n")
 

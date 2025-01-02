@@ -11,7 +11,7 @@ class DocumentStore(SQLModel,table=True):
     uploaded_at : datetime = Field(default_factory=datetime.now)
 
 
-DATABASE_URL = "postgresql+psycopg2://username:password@host/dbname"
+DATABASE_URL = "postgresql+psycopg2://postgres:sujit%40123@localhost/fastapi"
 
 engine = create_engine(DATABASE_URL)
 
