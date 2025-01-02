@@ -1,0 +1,20 @@
+Bsc Computer Science and Information Technology (Bsc CSIT) of Tribhuvan University is a 4 year program divided into 8 semesters. With a total of 126 credit hour, the course is taught in 60 institutions with an enrollment capacity of 3072 students
+
+Bachelors of Science in Computer Science and Information Technology (BScCSIT) is a four-year course affiliated with Tribhuvan University designed to provide the student with all sorts of knowledge in the field of Information Technology and Computing.
+
+BSc CSIT program involves, in addition to conventional lectures, a great deal of practical and project works. The program develops the underlying principles of both Computer Science and Information Technology and shows how these principles can be applied to real world problems. This program develops the skills that are essential for both computer professionals and IT specialists.
+
+The design and implementation of B.Sc. CSIT course offers new challenges when compared to the traditional computing environment. The recent emergence of global business, new technologies for data processing and data communication / networking environment, equip specialized science graduates to focus on professional careers in Information Technology. The B.Sc. CSIT program provides the students with adequate theoretical and practical knowledge which will enable students to effectively participate in solving the complex problem of the IT industry.
+
+Mission of the B.Sc. CSIT course:
+
+The mission of the B.Sc. CSIT course is to prepare the students to pursue career advancement in the field of information technology. At the completion of this degree, a student will be able to design the real world e-media products or create technical solutions to hardware and software problems, depending on the chosen area of specialization and electives.However, the main aim of the B.Sc. CSIT program can be enlisted as:
+
+1.To offer intensive knowledge in the theory, design, programming and application of computers.
+2.Providing an in-depth understanding of and experience with computer systems.
+3.Developing creative and analytical skills that provides a basis for technological problem-solving.
+4.Equipping students with the technical knowledge required for an IT professionals to handle multi-tasking situations and to assess and develop computer based solutions.
+5.Imparting knowledge of computer and programming logic environment in IT.
+6.Knowledge of advanced IT applications in different business sectors.
+7.To equip students with the technical knowledge required for an IT professional to handle multi-tasking and multi programming situations and to assess and develop computer based solutions.
+8.To provide necessary knowledge in the field of functional knowledge of hardware system and the and necessary knowledge of computer software system.
